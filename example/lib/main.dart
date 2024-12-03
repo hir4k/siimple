@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:simple/simple.dart';
+import 'package:siimple/siimple.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  (await Simple.instance).logLines();
+  (await Siimple.instance).logLines();
   runApp(const MyApp());
 }
 
@@ -67,7 +67,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void _loadCounter() async {
-    final db = await Simple.instance;
+    final db = await Siimple.instance;
     final counter = await db.get('counter');
     if (counter != null) {
       setState(() {
@@ -86,7 +86,7 @@ class _MyHomePageState extends State<MyHomePage> {
       _counter++;
     });
 
-    final db = await Simple.instance;
+    final db = await Siimple.instance;
     await db.set('counter', _counter.toString());
   }
 

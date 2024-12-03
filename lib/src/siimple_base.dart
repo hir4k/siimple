@@ -3,19 +3,19 @@ import 'dart:io';
 
 import 'package:path_provider/path_provider.dart';
 
-class Simple {
-  Simple._internal(String path) {
+class Siimple {
+  Siimple._internal(String path) {
     _file = File(path);
   }
 
-  static Simple? _instance;
+  static Siimple? _instance;
   late final File _file;
 
-  static Future<Simple> get instance async {
+  static Future<Siimple> get instance async {
     if (_instance == null) {
       final directory = await _getApplicationDocumentsDirectory();
       final filePath = '${directory.path}/_simpledb';
-      final db = Simple._internal(filePath);
+      final db = Siimple._internal(filePath);
       // Create the file if it doesn't exist
       if (!await db._file.exists()) {
         await db._file.create(recursive: true);

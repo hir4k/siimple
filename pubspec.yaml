@@ -1,6 +1,6 @@
 name: siimple
 description: Simple but powerful database for flutter.
-version: 0.0.1
+version: 0.0.2
 repository: https://github.com/hir4k/siimple.git
 
 environment:
