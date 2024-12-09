@@ -6,9 +6,8 @@ issue_tracker: https://github.com/hir4k/siimple/issues
 topics:
   - database
   - siimple
-  - isar
   - sqlite
-  - encryption
+  - isar
   - storage
 
 environment:
