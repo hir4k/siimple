@@ -9,18 +9,6 @@ void main() async {
   final db = Database();
   await db.initialize();
 
-  // final users = db.collection('users');
-  // // users.create({
-  // //   'name': 'mike',
-  // //   'age': 25,
-  // //   'email': 'alice@example.com',
-  // // });
-
-  // final documents = users.getAll();
-  // for (var document in documents) {
-  //   log("$document");
-  // }
-
   runApp(RepositoryProvider(
     create: (context) => db,
     child: const MyApp(),
@@ -33,7 +21,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => TodoCubit(context.read<Database>()),
+      create: (context) => TodoCubit(context.read<Database>())..list(),
       child: MaterialApp(
         title: 'Todo',
         theme: ThemeData(
@@ -46,11 +34,80 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
   @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  final controller = TextEditingController();
+
+  @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Todos'),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          final cubit = context.read<TodoCubit>();
+          showModalBottomSheet(
+            context: context,
+            builder: (context) {
+              return Wrap(
+                children: [
+                  Container(
+                    padding: const EdgeInsets.all(16),
+                    child: Column(
+                      children: [
+                        TextFormField(
+                          controller: controller,
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            if (controller.text.isNotEmpty) {
+                              cubit.create(controller.text);
+                              Navigator.of(context).pop();
+                            }
+                          },
+                          child: const Text('Save'),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              );
+            },
+          );
+        },
+        child: const Center(
+          child: Icon(Icons.add),
+        ),
+      ),
+      body: BlocBuilder<TodoCubit, List<Document>>(
+        builder: (context, docs) {
+          if (docs.isEmpty) {
+            return const Center(
+              child: Text('No todos'),
+            );
+          }
+
+          if (docs.isNotEmpty) {
+            return ListView.builder(
+              itemCount: docs.length,
+              itemBuilder: (context, index) {
+                return ListTile(
+                  title: Text(docs[index].data['text']),
+                );
+              },
+            );
+          }
+
+          return const SizedBox.shrink();
+        },
+      ),
+    );
   }
 }

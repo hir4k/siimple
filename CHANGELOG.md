@@ -10,3 +10,8 @@
 # 0.0.3
 
 - Converted from key-value to NoSQL database.
+
+# 0.0.4
+
+- Improved example added.
+- Readme updated.
