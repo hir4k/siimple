@@ -1,5 +1,5 @@
-# simple
-Simple But Powerful NoSQL Database For Flutter.
+# Siimple
+Simple but powerful, easy to use and fast NoSQL database for flutter.
 
 
 ## Usage:
