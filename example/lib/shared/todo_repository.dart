@@ -15,7 +15,7 @@ class TodoRepository {
   Stream<List<TodoModel>> get stream => _controller.stream;
 
   void list() {
-    final docs = todoCollection.getAll();
+    final docs = todoCollection.query().where("text__icontains", "F").findAll();
     final todos = docs
         .map((doc) => TodoModel(id: doc.id, text: doc.data['text']))
         .toList();

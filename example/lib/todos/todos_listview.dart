@@ -25,6 +25,7 @@ class TodosListview extends StatelessWidget {
               itemBuilder: (context, index) {
                 return ListTile(
                   title: Text(state.todos[index].text),
+                  subtitle: Text(state.todos[index].id),
                 );
               },
             );
