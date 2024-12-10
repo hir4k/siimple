@@ -1,4 +1,6 @@
-import 'package:example/cubit/todo_cubit.dart';
+import 'package:example/create_todo/create_todo_button.dart';
+import 'package:example/shared/todo_repository.dart';
+import 'package:example/todos/todos_listview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:siimple/siimple.dart';
@@ -20,8 +22,8 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => TodoCubit(context.read<Database>())..list(),
+    return RepositoryProvider(
+      create: (context) => TodoRepository(context.read<Database>()),
       child: MaterialApp(
         title: 'Todo',
         theme: ThemeData(
@@ -42,72 +44,14 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final controller = TextEditingController();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Todos'),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          final cubit = context.read<TodoCubit>();
-          showModalBottomSheet(
-            context: context,
-            builder: (context) {
-              return Wrap(
-                children: [
-                  Container(
-                    padding: const EdgeInsets.all(16),
-                    child: Column(
-                      children: [
-                        TextFormField(
-                          controller: controller,
-                        ),
-                        TextButton(
-                          onPressed: () {
-                            if (controller.text.isNotEmpty) {
-                              cubit.create(controller.text);
-                              Navigator.of(context).pop();
-                            }
-                          },
-                          child: const Text('Save'),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              );
-            },
-          );
-        },
-        child: const Center(
-          child: Icon(Icons.add),
-        ),
-      ),
-      body: BlocBuilder<TodoCubit, List<Document>>(
-        builder: (context, docs) {
-          if (docs.isEmpty) {
-            return const Center(
-              child: Text('No todos'),
-            );
-          }
-
-          if (docs.isNotEmpty) {
-            return ListView.builder(
-              itemCount: docs.length,
-              itemBuilder: (context, index) {
-                return ListTile(
-                  title: Text(docs[index].data['text']),
-                );
-              },
-            );
-          }
-
-          return const SizedBox.shrink();
-        },
-      ),
+      floatingActionButton: const CreateTodoButton(),
+      body: const TodosListview(),
     );
   }
 }

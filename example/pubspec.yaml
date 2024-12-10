@@ -39,6 +39,7 @@ dependencies:
     path: ../../siimple
   path: ^1.9.0
   flutter_bloc: ^8.1.6
+  rxdart: ^0.28.0
   
 
 dev_dependencies:
