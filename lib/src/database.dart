@@ -1,21 +1,23 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 import 'dart:io';
 import 'package:path_provider/path_provider.dart';
-
 import './collection.dart';
 
-class Database {
+class Siimple {
   final String fileName;
   late String filePath;
   final Map<String, Collection> _collections = {};
 
-  Database({this.fileName = "siimple.json"});
+  Siimple({this.fileName = "siimple.json"});
 
   Future<File> _initializeFile() async {
-    final directory = await getApplicationDocumentsDirectory();
-    filePath = '${directory.path}/$fileName';
-    return File(filePath);
+    if (Platform.isAndroid || Platform.isIOS) {
+      final directory = await getApplicationDocumentsDirectory();
+      filePath = '${directory.path}/$fileName';
+      return File(filePath);
+    }
+
+    throw Exception("This package is not available to use in this platform.");
   }
 
   Future<void> initialize() async {

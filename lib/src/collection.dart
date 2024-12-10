@@ -7,7 +7,7 @@ import './document.dart';
 class Collection {
   final String name;
   final List<Document> _documents = [];
-  final Database database;
+  final Siimple database;
 
   Collection(this.name, this.database);
 
@@ -37,7 +37,7 @@ class Collection {
   }
 
   static Collection fromJson(
-      String name, Map<String, dynamic> json, Database database) {
+      String name, Map<String, dynamic> json, Siimple database) {
     final collection = Collection(name, database);
     final list = json['documents'] as List;
     final documents =
@@ -91,6 +91,11 @@ class Collection {
         }
         return true;
       }).toList();
+    }
+
+    // Apply limit
+    if (builder.limitCount != null) {
+      results = results.take(builder.limitCount!).toList();
     }
 
     return results;

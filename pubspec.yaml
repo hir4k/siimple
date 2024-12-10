@@ -1,5 +1,5 @@
 name: siimple
-description: Simple but powerful NoSQL database for flutter.
+description: Simple but powerful, easy to use and fast NoSQL database for flutter.
 version: 0.0.4
 repository: https://github.com/hir4k/siimple.git
 issue_tracker: https://github.com/hir4k/siimple/issues
@@ -14,9 +14,9 @@ environment:
   sdk: ^3.5.4
 
 dependencies:
-  path_provider: ^2.1.5
+  path_provider: ">=2.1.0"
   uuid: ^4.5.1
 
 dev_dependencies:
-  lints: ^4.0.0
+  lints: ^5.0.0
   test: ^1.24.0

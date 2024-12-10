@@ -8,7 +8,7 @@ import 'package:siimple/siimple.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  final db = Database();
+  final db = Siimple();
   await db.initialize();
 
   runApp(RepositoryProvider(
@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return RepositoryProvider(
-      create: (context) => TodoRepository(context.read<Database>()),
+      create: (context) => TodoRepository(context.read<Siimple>()),
       child: MaterialApp(
         title: 'Todo',
         theme: ThemeData(

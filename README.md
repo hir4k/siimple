@@ -6,17 +6,20 @@ Simple But Powerful NoSQL Database For Flutter.
 
 ```dart
 // Initialize database
-final db = Database();
+final db = Siimple();
 await db.initialize();
 
-// Create todo collection
+// Create or get todo collection
 final todoCollection = db.collection('todos');
 
 // Create new todo
 todoCollection.create({'text': 'This is a dummy todo.'});
 
 // Get all todos
-todoCollection.getAll();
+todoCollection.query().findAll();
+
+// Get todos by some conditions
+todoCollection.query().where("text__contains", "t").limit(5).findAll();
 ```
 
 See `/example` for better understanding.

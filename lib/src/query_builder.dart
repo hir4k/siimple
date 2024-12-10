@@ -1,11 +1,10 @@
-import 'dart:developer';
 import 'package:siimple/siimple.dart';
 
 class QueryBuilder {
   final Collection collection;
   final Map<String, dynamic> filters = {};
   Function? sorting;
-  int? limit;
+  int? limitCount;
 
   QueryBuilder(this.collection);
 
@@ -15,9 +14,14 @@ class QueryBuilder {
     return this;
   }
 
+  // Limit the number of results
+  QueryBuilder limit(int limitValue) {
+    limitCount = limitValue;
+    return this;
+  }
+
   // Execute and return the results
   List<Document> findAll() {
-    log("$filters");
     return collection.executeQuery(this);
   }
 }

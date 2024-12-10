@@ -8,15 +8,19 @@ class TodoRepository {
     _controller = BehaviorSubject.seeded([]);
   }
 
-  final Database db;
+  final Siimple db;
   late Collection todoCollection;
   late BehaviorSubject<List<TodoModel>> _controller;
 
   Stream<List<TodoModel>> get stream => _controller.stream;
 
   void list() {
-    final docs = todoCollection.query().where("text__icontains", "F").findAll();
-    final todos = docs
+    final documents = todoCollection
+        .query()
+        .where("text__icontains", "t")
+        .limit(10)
+        .findAll();
+    final todos = documents
         .map((doc) => TodoModel(id: doc.id, text: doc.data['text']))
         .toList();
     _controller.sink.add(todos);
