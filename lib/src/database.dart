@@ -27,7 +27,13 @@ class Siimple {
     throw Exception("This package is not available to use in this platform.");
   }
 
+  /// Initialize the database.
+  /// This should run on the main function before performing any db actions.
   Future<void> initialize() async {
+    if (!Platform.isAndroid || !Platform.isIOS) {
+      throw Exception('Android and IOS is supported for now.');
+    }
+
     await _initializeLockFile();
     final file = await _initializeDbFile();
 
@@ -49,6 +55,7 @@ class Siimple {
     }
   }
 
+  /// This will save the database
   Future<void> save() async {
     await _fileLock.lock();
     try {
@@ -63,6 +70,7 @@ class Siimple {
     }
   }
 
+  /// Create or get a collection
   Collection collection(String name) {
     return _collections.putIfAbsent(name, () => Collection(name, this));
   }
