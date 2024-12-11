@@ -14,20 +14,16 @@ class TodoRepository {
 
   Stream<List<TodoModel>> get stream => _controller.stream;
 
-  void list() {
-    final documents = todoCollection
-        .query()
-        .where("text__icontains", "t")
-        .limit(10)
-        .findAll();
+  void list() async {
+    final documents = await todoCollection.query().findAll();
     final todos = documents
         .map((doc) => TodoModel(id: doc.id, text: doc.data['text']))
         .toList();
     _controller.sink.add(todos);
   }
 
-  void create(String text) {
-    final doc = todoCollection.create({'text': text});
+  Future<void> create(String text) async {
+    final doc = await todoCollection.create({'text': text});
     final todo = TodoModel(id: doc.id, text: doc.data['text']);
     _controller.sink.add([..._controller.value, todo]);
   }

@@ -11,23 +11,23 @@ class Collection {
 
   Collection(this.name, this.database);
 
-  Document create(Map<String, dynamic> data) {
+  Future<Document> create(Map<String, dynamic> data) async {
     final id = Uuid().v7();
     final document = Document(id, data);
     _documents.add(document);
-    database.save();
+    await database.save();
     return document;
   }
 
-  void update(String id, Map<String, dynamic> newData) {
+  Future<void> update(String id, Map<String, dynamic> newData) async {
     var document = _documents.firstWhere((doc) => doc.id == id);
     document.data = newData;
-    database.save();
+    await database.save();
   }
 
-  void delete(String id) {
+  Future<void> delete(String id) async {
     _documents.removeWhere((doc) => doc.id == id);
-    database.save();
+    await database.save();
   }
 
   Map<String, dynamic> toJson() {
@@ -52,14 +52,14 @@ class Collection {
   }
 
   // Method to execute the query and return results
-  List<Document> executeQuery(QueryBuilder builder) {
+  Future<List<Document>> executeQuery(QueryBuilder builder) async {
     List<Document> results = List.from(_documents);
 
     // Apply filters
     if (builder.filters.isNotEmpty) {
       results = results.where((doc) {
         for (var filter in builder.filters.entries) {
-          // subqueries
+          // lookups
           bool containsLookup = filter.key.contains("__");
 
           if (!containsLookup) {

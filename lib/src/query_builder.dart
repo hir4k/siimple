@@ -21,7 +21,7 @@ class QueryBuilder {
   }
 
   // Execute and return the results
-  List<Document> findAll() {
-    return collection.executeQuery(this);
+  Future<List<Document>> findAll() async {
+    return await collection.executeQuery(this);
   }
 }
