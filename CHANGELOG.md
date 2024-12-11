@@ -15,3 +15,8 @@
 
 - Improved example added.
 - Readme updated.
+
+# 0.0.6
+
+- Added lock for data safty during save
+- Added query builder
