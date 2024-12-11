@@ -1,5 +1,5 @@
 library;
 
-export 'src/document.dart';
-export 'src/collection.dart';
-export 'src/database.dart';
+export "src/document.dart";
+export "src/collection.dart";
+export "src/database.dart";

@@ -3,12 +3,13 @@ import 'package:example/shared/todo_repository.dart';
 import 'package:example/todos/todos_listview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:siimple/siimple.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
-  final db = Siimple();
+  final dir = await getApplicationDocumentsDirectory();
+  final db = Siimple(path: dir.path);
   await db.initialize();
 
   runApp(RepositoryProvider(

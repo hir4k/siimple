@@ -23,7 +23,10 @@ class TodoRepository {
   }
 
   Future<void> create(String text) async {
-    final doc = await todoCollection.create({'text': text});
+    late Document doc;
+    await db.transaction(() async {
+      doc = await todoCollection.create({'text': text});
+    });
     final todo = TodoModel(id: doc.id, text: doc.data['text']);
     _controller.sink.add([..._controller.value, todo]);
   }

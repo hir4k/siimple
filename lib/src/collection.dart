@@ -1,45 +1,52 @@
-import 'package:siimple/src/query_builder.dart';
-import 'package:uuid/uuid.dart';
+import "package:siimple/src/query_builder.dart";
+import "package:uuid/uuid.dart";
 
-import './database.dart';
-import './document.dart';
+import "./database.dart";
+import "./document.dart";
 
 class Collection {
   final String name;
   final List<Document> _documents = [];
-  final Siimple database;
+  final Siimple _database;
 
-  Collection(this.name, this.database);
+  Collection(this.name, this._database);
 
   Future<Document> create(Map<String, dynamic> data) async {
-    final id = Uuid().v7();
+    late String id;
+    if (data.containsKey("id")) {
+      id = data["id"];
+      data.remove("id");
+    } else {
+      id = Uuid().v4();
+    }
+
     final document = Document(id, data);
     _documents.add(document);
-    await database.save();
+    await _database.save();
     return document;
   }
 
   Future<void> update(String id, Map<String, dynamic> newData) async {
     var document = _documents.firstWhere((doc) => doc.id == id);
     document.data = newData;
-    await database.save();
+    await _database.save();
   }
 
   Future<void> delete(String id) async {
     _documents.removeWhere((doc) => doc.id == id);
-    await database.save();
+    await _database.save();
   }
 
   Map<String, dynamic> toJson() {
     return {
-      'documents': _documents.map((doc) => doc.toJson()).toList(),
+      "documents": _documents.map((doc) => doc.toJson()).toList(),
     };
   }
 
   static Collection fromJson(
       String name, Map<String, dynamic> json, Siimple database) {
     final collection = Collection(name, database);
-    final list = json['documents'] as List;
+    final list = json["documents"] as List;
     final documents =
         list.map((docJson) => Document.fromJson(docJson)).toList();
     collection._documents.addAll(documents);

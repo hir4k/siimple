@@ -1,4 +1,4 @@
-import 'package:siimple/siimple.dart';
+import "package:siimple/siimple.dart";
 
 class QueryBuilder {
   final Collection collection;

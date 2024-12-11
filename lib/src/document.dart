@@ -4,12 +4,12 @@ class Document {
 
   Document(this.id, this.data);
 
-  Map<String, dynamic> toJson() => {'id': id, 'data': data};
+  Map<String, dynamic> toJson() => {"id": id, "data": data};
 
   static Document fromJson(Map<String, dynamic> json) {
-    return Document(json['id'], json['data']);
+    return Document(json["id"], json["data"]);
   }
 
   @override
-  String toString() => 'Document(id: $id, data: $data)';
+  String toString() => "Document(id: $id, data: $data)";
 }
