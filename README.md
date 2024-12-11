@@ -19,7 +19,7 @@ void main() async {
   final db = Siimple(path: dir.path);
   await db.initialize();
   
-  final todos = db.collection('todos');
+  final todoCollection = db.collection('todos');
 
   // Add some data
   await todoCollection.create({'text': 'Siimple is easy'});
